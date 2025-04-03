@@ -12,8 +12,8 @@ import os
 
 def config_tela():
     st.set_page_config(
-        page_title='J.A.R.V.I.S PDF',
-        page_icon=':robot_face:'
+        page_title='J.A.R.V.I.S RAG PDF',
+        page_icon='🤖'
     )
     st.markdown("<h1 style='text-align: center; color: #4B8BBE;'>Assistente de leitura PDF 🤖</h1>", unsafe_allow_html=True)
     st.divider()
