@@ -45,7 +45,9 @@ streamlit run app.py
 ---
 
 
-## 🏆 Desenvolvido por
-**Leandro Souza**  
+## Desenvolvedor
+Desenvolvido por **Leandro Souza**
+
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/lsouzadasilva)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/leandro-souza-bi/)
 
