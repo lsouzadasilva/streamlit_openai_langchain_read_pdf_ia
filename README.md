@@ -1,4 +1,4 @@
-# Oraclo PDF - Assistente de Leitura PDF 🤖
+# J.A.R.V.I.S PDF - Assistente de Leitura PDF 🦜
 
 ## Sobre o Projeto
 Oraclo PDF é um assistente de leitura de documentos em PDF baseado em inteligência artificial. Ele permite análise e extração de informações de maneira eficiente, respondendo perguntas com base no conteúdo dos arquivos PDF.
