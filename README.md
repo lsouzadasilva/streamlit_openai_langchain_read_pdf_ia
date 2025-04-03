@@ -44,10 +44,6 @@ streamlit run app.py
 
 ---
 
-## 📩 Baixar Arquivo
-Para baixar o código-fonte deste projeto, clique no link abaixo:
-
-[📥 Download Oraclo PDF](https://github.com/lsouzadasilva/oraclo-pdf/archive/refs/heads/main.zip)
 
 ---
 
