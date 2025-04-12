@@ -68,28 +68,36 @@ with tab_config:
             st.session_state.api_key = api_key
             st.success('Chave salva com sucesso!')
     api_open_ai()
+    
       
     def carregar_pdf():
-        uploaded_file = st.file_uploader("Carregar PDF", type=["pdf"], accept_multiple_files=True)
-        if uploaded_file is not None:
+    uploaded_files = st.file_uploader("Carregar PDF", type=["pdf"], accept_multiple_files=True)
+    
+    if uploaded_files:
+        all_splits = []
+
+        for uploaded_file in uploaded_files:
             with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmp_file:
                 tmp_file.write(uploaded_file.getvalue())
                 tmp_file_path = tmp_file.name
-                
+
             loader = PyPDFLoader(tmp_file_path)
             documents = loader.load()
-                
+
             text_splitter = RecursiveCharacterTextSplitter(
                 chunk_size=1000,
                 chunk_overlap=200
             )
             splits = text_splitter.split_documents(documents)
-                
-            os.unlink(tmp_file_path)
-            return splits
-        return None
+            all_splits.extend(splits)
 
-    documents = carregar_pdf()
+            os.unlink(tmp_file_path)
+
+        return all_splits
+    
+    return None
+
+documents = carregar_pdf()
     
 
 def setup_retriever(documents):
