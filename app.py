@@ -71,6 +71,7 @@ with tab_config:
       
     def carregar_pdf():
         uploaded_file = st.file_uploader("Carregar PDF", type=["pdf"])
+        accept_multiple_files=True
         if uploaded_file is not None:
             with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmp_file:
                 tmp_file.write(uploaded_file.getvalue())
