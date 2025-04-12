@@ -9,7 +9,6 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 import tempfile
 import os
 
-
 def config_tela():
     st.set_page_config(
         page_title='J.A.R.V.I.S RAG PDF',
@@ -18,7 +17,6 @@ def config_tela():
     st.markdown("<h1 style='text-align: center; color: #4B8BBE;'>Assistente de leitura PDF 🤖</h1>", unsafe_allow_html=True)
     st.divider()
 config_tela()
-
 
 def ocult_menu():
     hide_st_style = """
@@ -30,9 +28,7 @@ def ocult_menu():
     st.markdown(hide_st_style, unsafe_allow_html=True)
 ocult_menu()
 
-
 st.sidebar.markdown("<h2 style='color: #A67C52;'>J.A.R.V.I.S 🤖</h2>", unsafe_allow_html=True)
-
 
 tab_home, tab_config = st.sidebar.tabs(["Home", "Configurações"])
 
@@ -57,7 +53,6 @@ with tab_home:
         """)
     sobre()
 
-      
 with tab_config: 
     def api_open_ai():
         if 'api_key' not in st.session_state:
@@ -69,29 +64,32 @@ with tab_config:
             st.success('Chave salva com sucesso!')
     api_open_ai()
     
-      
     def carregar_pdf():
-        uploaded_file = st.file_uploader("Carregar PDF", type=["pdf"])
-        if uploaded_file is not None:
-            with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmp_file:
-                tmp_file.write(uploaded_file.getvalue())
-                tmp_file_path = tmp_file.name
-                
-            loader = PyPDFLoader(tmp_file_path)
-            documents = loader.load()
-                
-            text_splitter = RecursiveCharacterTextSplitter(
-                chunk_size=1000,
-                chunk_overlap=200
-            )
-            splits = text_splitter.split_documents(documents)
-                
-            os.unlink(tmp_file_path)
-            return splits
+        uploaded_files = st.file_uploader("Carregar PDF", type=["pdf"], accept_multiple_files=True)
+        if uploaded_files:
+            all_splits = []
+
+            for uploaded_file in uploaded_files:
+                with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmp_file:
+                    tmp_file.write(uploaded_file.getvalue())
+                    tmp_file_path = tmp_file.name
+
+                loader = PyPDFLoader(tmp_file_path)
+                documents = loader.load()
+
+                text_splitter = RecursiveCharacterTextSplitter(
+                    chunk_size=1000,
+                    chunk_overlap=200
+                )
+                splits = text_splitter.split_documents(documents)
+                all_splits.extend(splits)
+
+                os.unlink(tmp_file_path)
+
+            return all_splits
         return None
 
     documents = carregar_pdf()
-    
 
 def setup_retriever(documents):
     if documents and st.session_state.api_key:
