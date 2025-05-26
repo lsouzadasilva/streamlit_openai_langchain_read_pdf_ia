@@ -155,10 +155,6 @@ def main_chat():
                     | ChatOpenAI(openai_api_key=st.session_state.api_key, temperature=0.3)
                 )
                 
-                # with st.chat_message("assistant"):
-                #     response = chain.invoke(user_input)
-                #     st.markdown(response.content)
-                #     st.session_state.messages.append({"role": "assistant", "content": response.content})
 
                 with st.chat_message("assistant"):
                     response_stream = chain.stream(user_input)
