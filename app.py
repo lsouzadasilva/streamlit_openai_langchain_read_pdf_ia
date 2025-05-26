@@ -157,20 +157,9 @@ def main_chat():
                 
 
                 with st.chat_message("assistant"):
-                    response_stream = chain.stream(user_input)
-                
-                    full_response = ""
-                    stream_placeholder = st.empty()
-                
-                    def write_stream():
-                        nonlocal full_response
-                        for chunk in response_stream:
-                            token = chunk.content if hasattr(chunk, "content") else ""
-                            full_response += token
-                            yield full_response
-                
-                    stream_placeholder.write_stream(write_stream)
-                    st.session_state.messages.append({"role": "assistant", "content": full_response})
+                    response = chain.invoke(user_input)
+                    st.markdown(response.content)
+                    st.session_state.messages.append({"role": "assistant", "content": response.content})
 
             
             except Exception as e:
