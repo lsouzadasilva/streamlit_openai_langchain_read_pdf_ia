@@ -155,10 +155,27 @@ def main_chat():
                     | ChatOpenAI(openai_api_key=st.session_state.api_key, temperature=0.3)
                 )
                 
+                # with st.chat_message("assistant"):
+                #     response = chain.invoke(user_input)
+                #     st.markdown(response.content)
+                #     st.session_state.messages.append({"role": "assistant", "content": response.content})
+
                 with st.chat_message("assistant"):
-                    response = chain.invoke(user_input)
-                    st.markdown(response.content)
-                    st.session_state.messages.append({"role": "assistant", "content": response.content})
+                    response_stream = chain.stream(user_input)
+                
+                    full_response = ""
+                    stream_placeholder = st.empty()
+                
+                    def write_stream():
+                        nonlocal full_response
+                        for chunk in response_stream:
+                            token = chunk.content if hasattr(chunk, "content") else ""
+                            full_response += token
+                            yield full_response
+                
+                    stream_placeholder.write_stream(write_stream)
+                    st.session_state.messages.append({"role": "assistant", "content": full_response})
+
             
             except Exception as e:
                 with st.chat_message("assistant"):
