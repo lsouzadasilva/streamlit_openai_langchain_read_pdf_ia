@@ -156,10 +156,10 @@ def main_chat():
                 )
                 
 
-                with st.chat_message("assistant"):
-                    response = chain.invoke(user_input)
-                    st.markdown(response.content)
-                    st.session_state.messages.append({"role": "assistant", "content": response.content})
+            with st.chat_message("assistant"):
+                response = chain.invoke(user_input)
+                st.markdown(response.content)
+                st.session_state.messages.append({"role": "assistant", "content": response.content})
 
             
             except Exception as e:
